@@ -6,9 +6,9 @@ export default class Accounts {
         this.http = http
     }
     all(callback){
-        this.http.get("accounts/list.json", callback)
+        this.http.get("accounts", callback)
     }
     add(account, callback){
-        this.http.post("accounts/add.json", account, callback)
+        this.http.post("accounts", account, callback)
     }
 }

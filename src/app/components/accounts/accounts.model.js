@@ -13,10 +13,6 @@ export default class Accounts {
             failure('Account name should not be empty!')
             return
         }
-        this.api.accounts.add(account,
-            (result) => {
-                result.success ? success() : failure(result.errors[0].defaultMessage)
-            }
-        )
+        this.api.accounts.add(account, success)
     }
 }

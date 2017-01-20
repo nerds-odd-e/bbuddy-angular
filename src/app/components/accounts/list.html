@@ -10,9 +10,9 @@
         <tbody class="table-hover">
         <tr ng-repeat="account in $ctrl.accounts">
             <td class="text-left">{{account.name}}</td>
-            <td class="text-left">{{account.balanceBroughtForward}}</td>
+            <td class="text-left">{{account.balance}}</td>
         </tr>
         </tbody>
     </table>
 </div>
-<a ui-sref="accountsAdd" class="btn btn-primary">Add</a>
+<a ui-sref="app.accountsAdd" class="btn btn-primary">Add</a>

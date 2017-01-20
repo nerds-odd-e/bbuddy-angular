@@ -7,13 +7,13 @@ export default class AccountsAddController {
         this.$state = $state
         this.account = {
             name: '',
-            balanceBroughtForward: 0
+            balance: 0
         }
         this.message = ""
     }
     save(){
         this.accounts.add(this.account,
-            () => this.$state.go('accounts'),
+            () => this.$state.go('app.accounts'),
             (message) => this.message = message )
     }
 }

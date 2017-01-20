@@ -1,7 +1,7 @@
 import Accounts from '../../../components/accounts/accounts.model';
 
 describe('accounts model', function() {
-    var account = {name: 'AHA', balanceBroughtForward: 100000}
+    var account = {name: 'AHA', balance: 100000}
     var api, add, accounts, success, failure
     beforeEach(() => {
         api = {accounts: {add: () => {}}}
@@ -13,17 +13,10 @@ describe('accounts model', function() {
     it('add an account successfully', function(){
         accounts.add(account, success, failure)
 
-        add.should.have.been.calledWith({name: 'AHA', balanceBroughtForward: 100000})
+        add.should.have.been.calledWith({name: 'AHA', balance: 100000})
         success.should.have.been.called
     })
 
-    it('server response error when adding an account', function(){
-        add.yields({success: false, errors: [{defaultMessage: 'Error'}]})
-
-        accounts.add(account, success, failure)
-
-        failure.should.have.been.calledWith('Error')
-    })
     it('account name should not be empty when adding an account', function(){
         account.name = ''
 
