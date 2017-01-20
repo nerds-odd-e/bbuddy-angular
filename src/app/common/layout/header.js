@@ -14,8 +14,7 @@ class HeaderController {
 
 var header = {
     bindings: {
-        user: '<',
-        onSignOut: '&'
+        authentication: '<',
     },
     template: require('./header.html'),
     controller: HeaderController
