@@ -28,6 +28,7 @@
     "angular": "^1.5.9",
     "angular-cookie": "^4.1.0",
     "angular-loading-bar": "^0.9.0",
+    "angular-ui-notification": "^0.3.5",
     "angular-ui-router": "^1.0.0-beta.2",
     "bootstrap": "^3.3.7",
     "lodash": "^4.17.4",
