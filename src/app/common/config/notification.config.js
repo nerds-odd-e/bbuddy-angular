@@ -3,7 +3,7 @@ import notification from 'angular-ui-notification'
 import 'angular-ui-notification/dist/angular-ui-notification.css'
 
 export default angular.module('notification', [notification])
-    .config((NotificationProvider) => {
+    .config(["NotificationProvider", (NotificationProvider) => {
         NotificationProvider.setOptions({
             delay: 10000,
             startTop: 20,
@@ -13,5 +13,5 @@ export default angular.module('notification', [notification])
             positionX: 'center',
             positionY: 'bottom'
         })
-    })
+    }])
     .name

@@ -1,14 +1,15 @@
 import {Inject} from '../decorators'
+import apiConfig from '../config/api.config'
 
 @Inject('$http', 'Notification')
 export default class Http{
     constructor($http, notification) {
         this.$http = $http
         this.notification = notification
-        this.hostUrl = 'http://localhost:3000/'
+        this.hostUrl = apiConfig.url
     }
     url(path) {
-        return `${this.hostUrl}${path}`
+        return `${this.hostUrl}/${path}`
     }
     callbackWithResponseData(callback){
         return (response) => callback(response.data)

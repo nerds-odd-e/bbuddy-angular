@@ -40,6 +40,9 @@ module.exports = function(dev) {
                 loader: 'babel',
                 exclude: /node_modules/
             }, {
+                test: /\.json$/,
+                loader: "json-loader"
+            }, {
                 test: /\.css$/,
                 loader: ExtractTextPlugin.extract('style', 'css?sourceMap!postcss')
             }, {
@@ -57,20 +60,23 @@ module.exports = function(dev) {
         ]
     }
     if (!dev) {
-        config.plugins.concat(
+        config.plugins.push(
             new webpack.DefinePlugin({
                 "process.env": {
                     // This has effect on the react lib size
                     "NODE_ENV": JSON.stringify("production")
                 }
-            }),
-            new webpack.optimize.DedupePlugin(),
-            new webpack.optimize.UglifyJsPlugin({
-                compress: {
-                    warnings: false
-                }
             })
         )
+        config.plugins.push(new webpack.optimize.DedupePlugin())
+        // Disable uglify due to angular di expect exact name of dependency, probably move angular to seperated file
+        // config.plugins.push(
+        //     new webpack.optimize.UglifyJsPlugin({
+        //         compress: {
+        //             warnings: false
+        //         }
+        //     })
+        // )
     }
 
     return config

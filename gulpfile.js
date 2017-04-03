@@ -7,10 +7,12 @@ var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = require("./webpack.config.js");
 var mocha = require("gulp-mocha");
 
-gulp.task("default", ["build-dev", "webpack:server"]);
+const dev = !process.argv.includes('--production')
 
-gulp.task("build-dev", ["webpack:build-dev", "mocha"], function() {
-    gulp.watch(["src/app/**/*", "src/sass/**/*"], ["webpack:build-dev"]);
+gulp.task("default", ["watch", "server"]);
+
+gulp.task("watch", ["build", "mocha"], function() {
+    gulp.watch(["src/app/**/*", "src/sass/**/*"], ["build"]);
     gulp.watch(["src/app/**/*", "src/app/test/**/*.js"], ["mocha"]);
 });
 
@@ -21,11 +23,8 @@ gulp.task("mocha", function(){
         .on('error', notify.onError("Error: <%= error.message %>"));
 })
 
-// Production build
-gulp.task("build", ["webpack:build"]);
-
-gulp.task("webpack:build", function(callback) {
-    webpack(webpackConfig(false), function(err, stats) {
+gulp.task("build", function(callback) {
+    webpack(webpackConfig(dev), function(err, stats) {
         if(err) throw new gutil.PluginError("webpack:build", err);
         gutil.log("[webpack:build]", stats.toString({
             chunks: false,
@@ -36,10 +35,10 @@ gulp.task("webpack:build", function(callback) {
 });
 
 
-gulp.task("webpack:build-dev", function(callback) {
+gulp.task("build-dev", function(callback) {
     var devCompiler = webpack(webpackConfig(true));
     devCompiler.run(function(err, stats) {
-        if(err) throw new gutil.PluginError("webpack:build-dev", err);
+        if(err) throw new gutil.PluginError("webpack:build", err);
         gutil.log("[webpack:build-dev]", stats.toString({
             chunks: false,
             colors: true
@@ -48,9 +47,9 @@ gulp.task("webpack:build-dev", function(callback) {
     });
 });
 
-gulp.task("webpack:server", function(callback) {
+gulp.task("server", function(callback) {
     // Start a webpack-dev-server
-    new WebpackDevServer(webpack(webpackConfig(true)))
+    new WebpackDevServer(webpack(webpackConfig(dev)))
         .listen(8100, "localhost", function(err) {
         if(err) throw new gutil.PluginError("webpack-dev-server", err);
         gutil.log("[webpack-dev-server]", "http://localhost:8100/");

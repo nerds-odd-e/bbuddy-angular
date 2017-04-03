@@ -8,6 +8,7 @@ import cookie from 'angular-cookie'
 import uiRouter from 'angular-ui-router'
 import header from './header'
 import sidebar from './sidebar'
+import apiConfig from '../config/api.config'
 
 
 let app = {
@@ -39,12 +40,12 @@ export default angular
     .module('app', [uiRouter, loading, cookie, tokenAuth, header, sidebar])
     .component('app', app)
     .config(routing)
-    .config(function($authProvider) {
+    .config(['$authProvider', function($authProvider) {
         $authProvider.configure({
-            apiUrl: 'http://localhost:3000',
+            apiUrl: apiConfig.url,
             validateOnPageLoad: false
         })
-    })
+    }])
     .run(($transitions, cfpLoadingBar)=>{
         $transitions.onStart({}, cfpLoadingBar.start)
         $transitions.onSuccess({}, cfpLoadingBar.complete)
