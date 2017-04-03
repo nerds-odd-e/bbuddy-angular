@@ -34,19 +34,6 @@ gulp.task("build", function(callback) {
     });
 });
 
-
-gulp.task("build-dev", function(callback) {
-    var devCompiler = webpack(webpackConfig(true));
-    devCompiler.run(function(err, stats) {
-        if(err) throw new gutil.PluginError("webpack:build", err);
-        gutil.log("[webpack:build-dev]", stats.toString({
-            chunks: false,
-            colors: true
-        }));
-        callback();
-    });
-});
-
 gulp.task("server", function(callback) {
     // Start a webpack-dev-server
     new WebpackDevServer(webpack(webpackConfig(dev)))
