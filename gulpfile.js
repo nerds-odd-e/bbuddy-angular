@@ -6,6 +6,8 @@ var webpack = require("webpack");
 var WebpackDevServer = require("webpack-dev-server");
 var webpackConfig = require("./webpack.config.js");
 var mocha = require("gulp-mocha");
+var istanbul = require('gulp-istanbul')
+var isparta = require('isparta')
 
 const dev = !process.argv.includes('--production')
 
@@ -21,6 +23,22 @@ gulp.task("mocha", function(){
         .pipe(mocha())
         .on('error', gutil.log)
         .on('error', notify.onError("Error: <%= error.message %>"));
+})
+
+gulp.task("istanbul", function(){
+    return gulp.src(['src/app/**/*.js'])
+        .pipe(istanbul({
+            instrumenter: isparta.Instrumenter,
+            includeUntested: true,
+        }))
+        .pipe(istanbul.hookRequire())
+})
+
+gulp.task("coverage", ["istanbul"], function(){
+    return gulp.src(['src/app/test/**/*.js'], { read: false })
+        .pipe(mocha())
+        .on('error', gutil.log)
+        .pipe(istanbul.writeReports())
 })
 
 gulp.task("build", function(callback) {

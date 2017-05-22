@@ -26,6 +26,6 @@ describe('accounts add controller', function() {
         controller.save()
 
         add.should.have.been.calledWith({name: '', balance: 0})
-        controller.message = 'Error'
+        controller.message.should.eql('Error')
     })
 })
