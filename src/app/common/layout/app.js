@@ -28,9 +28,9 @@ function routing($stateProvider) {
             component: 'app',
             abstract: true,
             resolve: {
-                auth: function(authentication) {
-                    return authentication.validateUser()
-                }
+                // auth: function(authentication) {
+                //     return authentication.validateUser()
+                // }
             }
         });
 }
@@ -43,6 +43,11 @@ export default angular
     .config(['$authProvider', function($authProvider) {
         $authProvider.configure({
             apiUrl: apiConfig.url,
+            emailSignInPath: '/login',
+            tokenValidationPath: '/login',
+            tokenFormat: {
+                "Authorization": "Bearer {{token}}"
+            },
             validateOnPageLoad: false
         })
     }])
